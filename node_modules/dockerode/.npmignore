@@ -1,0 +1,6 @@
+Vagrantfile
+cookbooks
+.vagrant
+test
+tools
+examples
