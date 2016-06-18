@@ -8,13 +8,16 @@ platform or a lambda-based flow via IOpipe.
 
 ## Create a serverless function:
 
+This function may be deployed on AWS Lambda as-is.
+
 ```javascript
 var Dockaless = require("dockaless")
 var dals = new Dockaless()
 
 exports.handler = dals.make_lambda("ubuntu", [ "bash", "-c", "ls; ps" ])
-exports.handler({}, () => {})
 ```
+
+For local testing, one can call ```exports.handler({}, () => {})```.
 
 ## Resizing videos with FFmpeg:
 
