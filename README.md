@@ -9,18 +9,12 @@ platform or a lambda-based flow via IOpipe.
 ## Create a serverless function:
 
 ```javascript
-var Dockaless = require("dockaless")
+const Dockaless = require("dockaless")
 
-var dals = Dockaless({
-  protocol: 'https',
-  host: '127.0.0.1',
-  port: process.env.DOCKER_PORT || 2375,
-  ca: fs.readFileSync('ca.pem'),
-  cert: fs.readFileSync('cert.pem'),
-  key: fs.readFileSync('key.pem')
-})
+const dals = new Dockaless()
 
-export.handler = dals.make_lambda("ubuntu", [ "whoami" ])
+exports.handler = dals.make_lambda("ubuntu", [ "bash", "-c", "ls; ps" ])
+exports.handler({}, () => {})
 ```
 
 ## Resizing videos with FFmpeg:
@@ -32,12 +26,12 @@ and APIs.
 ```javascript
 var iopipe = require("iopipe")()
 var Dockaless = require("dockaless")
-var dals = Dockaless()
+var dals = new Dockaless()
 
-export.handler = iopipe.define(
+exports.handler = iopipe.define(
   iopipe.property("url"),
   iopipe.fetch,
-  dals.make_lambda("ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:1" ])
+  dals.make_lambda("ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:1"$
 )
 ```
 
@@ -56,13 +50,13 @@ array of videos, saves them to storage, and returns URLs to the uploaded
 content.
 
 ```javascript
-var AWS = require('aws-sdk');
+var AWS = require('aws-sdk')
 var iopipe = require("iopipe")()
 var Dockaless = require("dockaless")
 var crypto = require("crypto")
 
-var dals = Dockaless()
-var s3 = new AWS.S3();
+var dals = new Dockaless()
+var s3 = new AWS.S3()
 
 function put_bucket(event, context) {
   s3.createBucket({Bucket: event.bucket}, function() {
@@ -76,11 +70,11 @@ function put_bucket(event, context) {
   });
 }
 
-export.handler = iopipe.define(
+exports.handler = iopipe.define(
   iopipe.property("urls"),
   iopipe.map(
     iopipe.fetch,
-    dals.make_lambda("ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:1" ]),
+    dals.make_lambda("ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:$
     (event, context) => {
       var video_hash = crypto.createHash('sha256').update(event).digest('hex')
       put_bucket({
