@@ -31,7 +31,7 @@ var dals = new Dockaless()
 exports.handler = iopipe.define(
   iopipe.property("url"),
   iopipe.fetch,
-  dals.make_lambda("ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:1"$
+  dals.make_lambda("ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:1" ])
 )
 ```
 
@@ -74,7 +74,7 @@ exports.handler = iopipe.define(
   iopipe.property("urls"),
   iopipe.map(
     iopipe.fetch,
-    dals.make_lambda("ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:$
+    dals.make_lambda("ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:1" ])
     (event, context) => {
       var video_hash = crypto.createHash('sha256').update(event).digest('hex')
       put_bucket({
