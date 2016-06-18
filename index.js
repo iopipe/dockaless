@@ -14,7 +14,7 @@ Dockaless.prototype.make_lambda = function(image, cmd) {
       if (err == null) {
         (context && 'succeed' in context) ? context.succeed(data) : context(data)
       } else{
-        (context && 'fail' in context) ? context.fail(data) : function() { throw err }
+        (context && 'fail' in context) ? context.fail(err) : function() { throw err }
       }
     })
   }
