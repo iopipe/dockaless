@@ -10,7 +10,6 @@ platform or a lambda-based flow via IOpipe.
 
 ```javascript
 var Dockaless = require("dockaless")
-
 var dals = new Dockaless()
 
 exports.handler = dals.make_lambda("ubuntu", [ "bash", "-c", "ls; ps" ])
