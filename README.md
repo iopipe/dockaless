@@ -9,9 +9,9 @@ platform or a lambda-based flow via IOpipe.
 ## Create a serverless function:
 
 ```javascript
-const Dockaless = require("dockaless")
+var Dockaless = require("dockaless")
 
-const dals = new Dockaless()
+var dals = new Dockaless()
 
 exports.handler = dals.make_lambda("ubuntu", [ "bash", "-c", "ls; ps" ])
 exports.handler({}, () => {})
