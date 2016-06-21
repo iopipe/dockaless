@@ -2,7 +2,7 @@ Dockaless - Serverless Docker functions
 ---------------------------------------
 
 Integrate Docker containers into a serverless
-platform or a lambda-based flow via IOpipe.
+platform or a lambda-based flow via [IOpipe](https://github.com/iopipe/iopipe).
 
 # Examples:
 
