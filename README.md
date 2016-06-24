@@ -1,5 +1,6 @@
 Dockaless - Serverless Docker functions
 ---------------------------------------
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/iopipe/iopipe)
 
 Integrate Docker containers into a serverless
 platform or a lambda-based flow via [IOpipe](https://github.com/iopipe/iopipe).
