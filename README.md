@@ -1,13 +1,11 @@
-Dockaless - Serverless Docker functions
----------------------------------------
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?maxAge=2592000)](https://gitter.im/iopipe/iopipe)
+# Dockaless - Serverless Docker functions
 
 Integrate Docker containers into a serverless
-platform or a lambda-based flow via [IOpipe](https://github.com/iopipe/iopipe).
+platform or a lambda-based flow via [turtle](https://github.com/iopipe/turtle).
 
-# Examples:
+## Examples:
 
-## Create a serverless function:
+### Create a serverless function:
 
 This function may be deployed on AWS Lambda as-is.
 
@@ -20,9 +18,9 @@ exports.handler = dals.make_lambda("ubuntu", [ "bash", "-c", "ls; ps" ])
 
 For local testing, one can call ```exports.handler({}, () => {})```.
 
-## Resizing videos with FFmpeg:
+### Resizing videos with FFmpeg:
 
-This may be leveraged with the [IOpipe library](https://github.com/iopipe/iopipe)
+This may be leveraged with the [turtle library](https://github.com/iopipe/turtle)
 to chain execution with local functions, remote functions,
 and APIs.
 
@@ -30,13 +28,13 @@ Utilizes the minimal, Alpine-linux based [ffmpeg image from
 sjourdan](https://github.com/sjourdan/ffmpeg-docker).
 
 ```javascript
-var iopipe = require("iopipe")()
-var Dockaless = require("dockaless")
-var dals = new Dockaless()
+const turtle = require("@iopipe/turtle")()
+const Dockaless = require("dockaless")
+const dals = new Dockaless()
 
-exports.handler = iopipe.define(
-  iopipe.property("url"),
-  iopipe.fetch,
+exports.handler = turtle.define(
+  turtle.property("url"),
+  turtle.fetch,
   dals.make_lambda("sjourdan/ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:1" ])
 )
 ```
@@ -46,7 +44,7 @@ from this URL and scaled (resized) using ffmpeg. The video is piped back
 over the network to the caller, but a script could continue by saving this
 somewhere (such as S3) as in the following example.
 
-## Parallelization
+### Parallelization
 
 This library combined with the IOpipe library can be used to easily
 build parallelized tasks requiring use of containerized applications.
@@ -57,7 +55,7 @@ content.
 
 ```javascript
 var AWS = require('aws-sdk')
-var iopipe = require("iopipe")()
+var turtle = require("@iopipe/turtle")()
 var Dockaless = require("dockaless")
 var crypto = require("crypto")
 
@@ -76,10 +74,10 @@ function put_bucket(event, context) {
   });
 }
 
-exports.handler = iopipe.define(
-  iopipe.property("urls"),
-  iopipe.map(
-    iopipe.fetch,
+exports.handler = turtle.define(
+  turtle.property("urls"),
+  turtle.map(
+    turtle.fetch,
     dals.make_lambda("sjourdan/ffmpeg", [ "-i", "pipe:0", "-vf", "scale=320:240", "pipe:1" ]),
     (event, context) => {
       var video_hash = crypto.createHash('sha256').update(event).digest('hex')
