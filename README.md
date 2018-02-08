@@ -1,5 +1,7 @@
 # Dockaless - Serverless Docker functions
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/iopipe/dockaless.svg)](https://greenkeeper.io/)
+
 Integrate Docker containers into a serverless
 platform or a lambda-based flow via [turtle](https://github.com/iopipe/turtle).
 
